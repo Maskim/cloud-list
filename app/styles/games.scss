@@ -1,0 +1,25 @@
+$light-brown: #CCC;
+
+@import "compass";
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#all-games {
+  .game {
+    width: 80px;
+    height: 80px;
+    background: $light-brown;
+    @include border-radius(100px);
+    margin: 10px;
+
+    position: absolute;
+    @include transition(all 0.3s);
+
+    &.important {
+      background: darken($light-brown, 30%);
+    }
+  }
+}

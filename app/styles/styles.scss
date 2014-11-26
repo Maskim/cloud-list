@@ -1,0 +1,191 @@
+//VARIABLES
+$background: #E9E5E2;
+$abscisse: #D1C3BC;
+$abscisseHover: #EE8C74;
+
+@import "compass";
+
+
+body{
+	margin: 0;
+	padding: 0;
+}
+
+canvas{
+	background: url(../images/background.jpg);
+	background-size: 100%;
+}
+
+.clickable{
+	cursor: pointer;
+}
+
+.rezpawn-timeline{
+	margin-top: 90px;
+
+	padding-bottom: 50px;
+	overflow: hidden;
+
+	.rez-trophies-lines{
+		.rez-trophies-line{
+			position: relative;
+		}
+	}
+
+	.rez-abscisse-container{
+		.rez-abscisse{
+			width: 100%;
+			height: 2px;
+			background: $abscisse;
+			position: relative;
+
+			.rez-abs{
+				position: absolute;
+				font-family: /*"Josefin", */Helvetica, Arial, sans-serif;
+
+				&.rez-abs-element{
+					width: 12px;
+					height: 12px;
+					border-radius: 100px;
+					top: -7px;
+
+					background: $background;
+					border: 2px solid $abscisse;
+					cursor: pointer;
+
+					transition-property: all;
+					transition-duration: 500ms;
+
+					&:hover{
+						border-color: $abscisseHover;
+						border-width: 3px;
+						width: 16px;
+						height: 16px;
+						top: -10px;
+						margin-left: -2px;
+						
+						.rez-abs-desc{
+							margin-top: 30px;
+							border-color: $abscisseHover;
+						}
+					}
+				}
+
+				&.rez-trophy{
+					img.rez-trophy-img{
+						width: 40px;
+						height: 40px;
+					}
+				}
+
+				.rez-abs-desc{
+					padding: 5px 10px;
+					border: 1px solid $abscisse;
+					position: absolute;
+					border-radius: 5px;
+					margin-top: 20px;
+
+					transition-property: all;
+					transition-duration: 500ms;
+
+					.rez-abs-desc-more{
+						display: none;
+
+						transition-property: all;
+						transition-duration: 500ms;
+					}
+				}
+
+				&.rez-abs-year{
+
+					.rez-abs-pointer{
+						width: 1px;
+						height: 40px;
+						display: block;
+
+						background: $abscisse; /* Old browsers */
+						background: -moz-linear-gradient(top,  $background 0%, $abscisse 50%, $background 100%); /* FF3.6+ */
+						background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$background), color-stop(50%,$abscisse), color-stop(100%,$background)); /* Chrome,Safari4+ */
+						background: -webkit-linear-gradient(top,  $background 0%,$abscisse 50%,$background 100%); /* Chrome10+,Safari5.1+ */
+						background: -o-linear-gradient(top,  $background 0%,$abscisse 50%,$background 100%); /* Opera 11.10+ */
+						background: -ms-linear-gradient(top,  $background 0%,$abscisse 50%,$background 100%); /* IE10+ */
+						background: linear-gradient(to bottom,  $background 0%,$abscisse 50%,$background 100%); /* W3C */
+						filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$background', endColorstr='$background',GradientType=0 ); /* IE6-9 */
+
+						position: absolute;
+
+						top: -20px;
+						left: 50%;
+						margin-left: -0.5px;
+					}
+
+					.rez-title{
+						margin-top: 30px;
+					}
+				}
+
+				&.rez-abs-month{
+					width: 100%;
+					top: 0;
+					opacity: 0;
+				}
+
+				.rez-abs-point{
+					width: 7px;
+					height: 7px;
+					border: 2px solid #333333;
+					@include border-radius(20px);
+
+					position: absolute;
+					left: 50%; margin-left: -3.5px;
+				}
+			}
+
+			&.zoom-year{
+				.multiple-on-year{
+					display: none;
+				}
+
+				.rez-abs-month, .rez-abs-day{
+					display: none;
+				}
+			}
+
+			&.zoom-month{
+				.rez-abs-month{
+				}
+
+				.rez-abs-day{
+					display: none;
+				}
+			}
+		}
+	}
+
+	.rez-controls{
+		position: relative;
+		width: 100%;
+
+		.rez-control{
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			background: $abscisse;
+
+			&.rez-control-before{
+				left: 0;
+			}
+			&.rez-control-next{
+				right: 0;
+			}
+
+			&.rez-control-zoom-plus{
+				top: -150px;
+			}
+
+			&.rez-control-zoom-moins{
+				top: -95px;
+			}
+		}
+	}
+}

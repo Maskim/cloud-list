@@ -50,6 +50,7 @@ gamesCollection.prototype.updateContainer = function() {
     var self = this;
     self.state.totalWidth = 0;
 
+    //INITIATE RAOD MAP OF IMPORTANT CHANGES
     var initialPlacementOfImportant = [];
     for(var i = 0; i < self.games.length; i++){
         //TODO ADD SIZE VARIATIONS
@@ -73,17 +74,13 @@ gamesCollection.prototype.updateContainer = function() {
 
     self.section.style.height = self.state.numberOfLine * self.state.heightOfGame + 'px';
 
-    //POSITIONNING IMPORTANT GAMES
+    //GENERATE ROAD MAP OF IMPORTANT
     var actualLine = Math.ceil(self.state.numberOfLine / 2) - 1,
         importantByLine = [];
     self.state.importantGamesChangement = [];
     for(i = 0; i < initialPlacementOfImportant.length; i++) {
         var wayOfChange = {};
         wayOfChange.start = initialPlacementOfImportant[i];
-
-        if(typeof(importantByLine[actualLine]) === 'undefined') {
-            importantByLine[actualLine] = 0;
-        }
 
         var center = 0, numberOfElement = 0;
         if(actualLine === -1) {
@@ -96,13 +93,22 @@ gamesCollection.prototype.updateContainer = function() {
         if(self.isPair(numberOfElement)) { center = Math.ceil(numberOfElement / 2); }
         else { center = Math.floor(numberOfElement / 2); }
 
-        var incr = Math.pow(-1, importantByLine[actualLine]);
+        var incr = 0;
+        if(typeof(importantByLine[actualLine]) === 'undefined') {
+            importantByLine[actualLine] = 0;
+        } else {
+            incr = Math.pow(-1, importantByLine[actualLine]);
+            if(importantByLine[actualLine] > 2 && self.isPair(importantByLine[actualLine])) {
+                incr = incr * importantByLine[actualLine] / 2;
+            } else if(importantByLine[actualLine] > 2) {
+                var round = Math.ceil(importantByLine[actualLine] / 2);
+                incr = incr * round;
+            }
+        }
 
         //center - 1 : Because increment of games start at 0 and not at 1
         wayOfChange.end = self.state.numberOfElementByLine * actualLine + center - 1 + incr;
         self.state.importantGamesChangement.push(wayOfChange);
-
-        console.log(wayOfChange);
 
         importantByLine[actualLine]++;
         actualLine--;
@@ -118,6 +124,12 @@ gamesCollection.prototype.updateImportantPlacement = function() {
     for(var i = 0; i < self.state.importantGamesChangement.length; i++) {
         var initialPosition = self.games[self.state.importantGamesChangement[i].start],
             endPosition = self.games[self.state.importantGamesChangement[i].end];
+
+        for (var j = i; j < self.state.importantGamesChangement.length; j++) {
+            if(self.state.importantGamesChangement[i].end === self.state.importantGamesChangement[j].start) {
+                self.state.importantGamesChangement[j].start = self.state.importantGamesChangement[i].start;
+            }
+        }
 
         var tempInnerHTML = initialPosition.innerHTML;
         var tempInnerClassName = initialPosition.className;
@@ -169,7 +181,7 @@ gamesCollection.prototype.updatePlacement = function() {
  * This function return true if int is a pair number
  */
 gamesCollection.prototype.isPair = function(int) {
-    return int % 2;
+    return int % 2 === 0;
 };
 
 /*
